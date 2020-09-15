@@ -1,0 +1,35 @@
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.margin-my {
+  margin-top: 200px;
+}
+
+.margin-micro {
+  margin-top: 30px;
+}
+
+.align {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.margin-right {
+  margin-right: 20px;
+}
+
+.margin-right-super {
+  margin-right: 50px;
+}
+
+.line {
+  text-decoration: line-through;
+}

@@ -1,0 +1,9 @@
+export const SET_USER = "SET_USER";
+export const DELETE_USER = "DELETE_USER";
+export const ADD_TODO = "ADD_TODO";
+export const DELETE_TODO = "DELETE_TODO";
+export const CHANGE_STATUS_TODO = "CHANGE_STATUS_TODO";
+export const CHANGE_ACTION_TODO = "CHANGE_ACTION_TODO";
+export const LOADING = "LOADING";
+export const ERROR = "ERROR";
+export const END = "END";
