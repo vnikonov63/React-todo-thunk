@@ -90,22 +90,46 @@ export function toggleStatusThunk(id, user) {
 export function deleteOneThunk(id, user) {
   return async function (dispatch) {
     dispatch(loading());
-    const response = await fetch(`/todo/${user.id}/delete`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: id,
-      }),
-    });
+    async function myFetch() {
+      const response = await fetch(`/todo/${user.id}/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      });
+      return response;
+    }
+    const response = await myFetch();
+    console.log(response);
+    let responseMain = response.status;
+    let responseInteral;
     if (response.status === 200) {
       dispatch(loading());
       dispatch(deleteTodo(id));
     } else {
-      dispatch(loading());
-      const finalResult = await response.json();
-      dispatch(error(finalResult.message));
+      if (response.status === 500) {
+        do {
+          responseInteral = await myFetch();
+          responseMain = responseInteral.status;
+        } while (responseMain === 500);
+
+        if (responseMain === 200) {
+          dispatch(loading());
+          dispatch(deleteTodo(id));
+        } else if (responseMain === 400) {
+          dispatch(loading());
+          const finalResult = await responseInteral.json();
+          dispatch(error(finalResult.message));
+        }
+      } else {
+        dispatch(loading());
+        console.log(response);
+        const finalResult = await response.json();
+        dispatch(error(finalResult.message));
+      }
     }
   };
 }
